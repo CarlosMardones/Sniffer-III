@@ -1,0 +1,6 @@
+# (C) Copyright 2001, Martin Roesch, Brian Caswell, et al.  All rights reserved.
+# $Id: dos.rules,v 1.25 2002/10/28 22:08:04 cazz Exp $
+#----------
+# DOS RULES
+#----------
+alert tcp any 19 <> any 7 (msg:"DOS UDP echo+chargen bomb"; reference:cve,CAN-1999-0635; reference:cve,CVE-1999-0103; classtype:attempted-dos; sid:271; rev:3;)

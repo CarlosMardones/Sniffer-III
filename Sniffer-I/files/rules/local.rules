@@ -1,0 +1,8 @@
+# $Id: local.rules,v 1.5 2001/12/19 18:40:05 cazz Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures.  Put your local
+# additions here.
+alert tcp $EXTERNAL_NET 4672 -> $HOME_NET 4672 (msg:"Conexion emule";)
+alert udp $EXTERNAL_NET 4672 -> $HOME_NET 4672 (msg:"Conexion emule";)

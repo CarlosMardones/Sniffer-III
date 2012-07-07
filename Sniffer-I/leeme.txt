@@ -1,0 +1,36 @@
+* En win 2k & XP:
+
+  - Instalar winPcap_4_0_1 (./files/necesario/WinPcap_4_0_1.exe)
+
+  - Insatalar jpcap 0.7 (./files/necesario/JpcapSetup-0.7.exe)
+
+  - Instalar JRE 1.6
+
+  - Ejecutar Sniffer-I:
+	
+	- Modo gráfico: 
+
+		sniffer-II.bat ( java -jar Sniffer.jar )
+
+	- Modo comando (muestra ayuda): 
+
+		sniffer-II.bat y luego opcion 2( java -jar Sniffer-II.jar -help )
+
+* En Ubuntu: 
+
+  - Insatalar jpcap 0.7 (./files/necesario/jpcap-0.7.deb)
+
+  - Instalar JRE 1.6
+
+  - Ejecutar Sniffer-II:
+	
+	- Modo gráfico: 
+
+		sniffer-II.bat ( java -jar Sniffer-II.jar )
+
+	- Modo comando (muestra ayuda): 
+
+		sniffer-II.bat y luego opcion 2( java -jar Sniffer-II.jar -help )
+               
+
+

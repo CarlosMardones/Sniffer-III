@@ -1,0 +1,95 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: experimental.rules,v 1.70 2002/11/05 22:20:34 cazz Exp $
+# ---------------
+# EXPERIMENTAL RULES
+# ---------------
+# These signatures are experimental, new and may trigger way too often.
+#
+# Be forwarned, this is our testing ground.  We put new signatures here for
+# testing before incorporating them into the default signature set.  This is
+# for bleeding edge stuff only.
+#
+
+alert ip 63.251.224.177 any -> $HOME_NET any (msg:"EXPERIMENTAL poll.gotomypc.com access"; reference:url,www.gotomypc.com/help2.tmpl; classtype:misc-activity; sid:1429; rev:1;)
+
+# once we get response, check for content:"|03|"; offset:0; depth:1;
+alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:"EXPERIMENTAL MS Terminal server request (RDP)"; content:"|03 00 00 0b 06 E0 00 00 00 00 00|"; offset:0; depth:11; flow:to_server,established; reference:cve,CAN-2001-0540; classtype:protocol-command-decode; sid:1447;  rev:3;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 3389 (msg:"EXPERIMENTAL MS Terminal server request"; content:"|03 00 00|"; offset:0; depth:3; content:"|e0 00 00 00 00 00|"; offset:5; depth:6; flow:to_server,established; reference:cve,CAN-2001-0540; classtype:protocol-command-decode; sid:1448;  rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS 80 (msg:"EXPERIMENTAL DOS cisco attempt"; flow:to_server,established; content:"|13|"; dsize:1; classtype:web-application-attack; sid:1545;  rev:3;)
+
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 32000 (msg:"MISC Xtramail Username overflow attempt"; flow:to_server,established; dsize:>500; content:"Username\: "; nocase; reference:cve,CAN-1999-1511; reference:bugtraq,791; classtype:attempted-admin; sid:1636;  rev:2;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 6789:6790 (msg:"EXPERIMENTAL DOS DB2 dos attempt"; flow:to_server,established; dsize:1; classtype:denial-of-service; sid:1641;  rev:3;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 500 (msg:"EXPERIMENTAL MISC IPSec PGPNet connection attempt"; content:"|00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 10 02 00 00 00 00 00 00 00 00 88 0D 00 00 5C 00 00 00 01 00 00 00 01 00 00 00 50 01 01 00 02 03 00 00 24 01 01 00 00 80 01 00 06 80 02 00 02 80 03 00 03 80 04 00 05 80 0B 00 01 00 0C 00 04 00 01 51 80 00 00 00 24 02 01 00 00 80 01 00 05 80 02 00 01 80 03 00 03 80 04 00 02 80 0B 00 01 00 0C 00 04 00 01 51 80 00 00 00 10|"; classtype:protocol-command-decode; sid:1771; rev:2;)
+alert ip any any -> 216.80.99.202 any (msg:"EXPERIMENTAL TROJAN fragroute trojan connection attempt"; reference:bugtraq,4898; classtype:trojan-activity; sid:1791; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"EXPERIMENTAL WEB-IIS .asp HTTP header buffer overflow attempt"; flow:to_server,established; content:"HTTP|2F|"; nocase; uricontent:".asp"; nocase; content:"|3A|"; content:"|0A|"; content:"|00|"; reference:bugtraq,4476; classtype:web-application-attack; sid:1801; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"EXPERIMENTAL WEB-IIS .asa HTTP header buffer overflow attempt"; flow:to_server,established; content:"HTTP|2F|"; nocase; uricontent:".asa"; nocase; content:"|3A|"; content:"|0A|"; content:"|00|"; reference:bugtraq,4476; classtype:web-application-attack; sid:1802; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"EXPERIMENTAL WEB-IIS .cer HTTP header buffer overflow attempt"; flow:to_server,established; content:"HTTP|2F|"; nocase; uricontent:".cer"; nocase; content:"|3A|"; content:"|0A|"; content:"|00|"; reference:bugtraq,4476; classtype:web-application-attack; sid:1803; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"EXPERIMENTAL WEB-IIS .cdx HTTP header buffer overflow attempt"; flow:to_server,established; content:"HTTP|2F|"; nocase; uricontent:".cdx"; nocase; content:"|3A|"; content:"|0A|"; content:"|00|"; reference:bugtraq,4476; classtype:web-application-attack; sid:1804; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"EXPERIMENTAL WEB-MISC apache chunked encoding memory corruption exploit attempt"; flow:established,to_server; content:"|C0 50 52 89 E1 50 51 52 50 B8 3B 00 00 00 CD 80|"; reference:bugtraq,5033; reference:cve,CAN-2002-0392; classtype:web-application-activity; sid:1808; rev:2;)
+alert tcp $HOME_NET 22 -> $EXTERNAL_NET any (msg:"EXPERIMENTAL MISC successful gobbles ssh exploit (GOBBLE)"; flow:from_server,established; content:"|2a|GOBBLE|2a|"; reference:bugtraq,5093; classtype:misc-attack; sid:1810; rev:1;)
+alert tcp $HOME_NET 22 -> $EXTERNAL_NET any (msg:"EXPERIMENTAL MISC successful gobbles ssh exploit (uname)"; flow:from_server,established; content:"uname"; reference:bugtraq,5093; classtype:misc-attack; sid:1811; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 22 (msg:"EXPERIMENTAL MISC gobbles SSH exploit attempt"; flow:to_server,established; content:"GOBBLES"; reference:bugtraq,5093; classtype:misc-attack; sid:1812; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 2533 (msg:"EXPERIMENTAL Alcatel PABX 4400 connection attempt"; flow:established,to_server; content:"|000143|"; offset:0; depth:3; classtype:misc-activity; reference:nessus,11019; sid:1819; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 515 (msg:"EXPERIMENTAL LPD dvips remote command execution attempt"; flow:to_server,established; content:"psfile=|2260|"; reference:cve,CVE-2001-1002; reference:nessus,11023; classtype:system-call-detect; sid:1821; rev:2;)
+
+alert tcp $EXTERNAL_NET 80 -> $HOME_NET any (msg:"EXPERIMENTAL ICQ forced user addition"; flow:established,to_client; content:"Content-Type\: application/x-icq"; content:"[ICQ User]"; reference:bugtraq,3226; reference:cve,CAN-2001-1305; classtype:misc-activity; sid:1832; rev:2;)
+alert tcp $EXTERNAL_NET 22 -> $HOME_NET any (msg:"EXPERIMENTAL SSH server banner overflow"; flow:established,from_server; content:"SSH-"; offset:0; depth:4; content:!"|0a|"; within:600; reference:bugtraq,5287; classtype:misc-attack; sid:1838; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP login buffer overflow attempt"; flow:established,to_server; content:" LOGIN "; content:!"|0a|"; within:100; reference:nessus,10125; reference:cve,CVE-1999-0005; classtype:attempted-user; sid:1842; rev:4;)
+# NOTES: this string should be within the first 3 bytes of the connection
+alert tcp $EXTERNAL_NET any -> $HOME_NET 33270 (msg:"EXPERIMENTAL BACKDOOR trinity connection attempt"; flow:to_server,established; content:"|21 40 23|"; offset:0; depth:3; reference:nessus,10501; reference:cve,CAN-2000-0138; classtype:attempted-admin; sid:1843; rev:2;)
+
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP authenticate overflow attempt"; flow:established,to_server; content:" AUTHENTICATE "; nocase; content:!"|0a|"; within:1024; reference:nessus,10292; reference:cve,CVE-1999-0042; classtype:misc-attack; sid:1844; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP list overflow attempt"; flow:established,to_server; content:" LIST |22 22| "; nocase; content:!"|0a|"; within:1024; reference:nessus,10374; reference:cve,CAN-2000-0284; classtype:misc-attack; sid:1845; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP lsub overflow attempt"; flow:established,to_server; content:" LSUB |22 22| "; nocase; content:!"|0a|"; within:1024; reference:nessus,10374; reference:cve,CAN-2000-0284; classtype:misc-attack; sid:1902; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP rename overflow attempt"; flow:established,to_server; content:" RENAME |22 22| "; nocase; content:!"|0a|"; within:1024; reference:nessus,10374; reference:cve,CAN-2000-0284; classtype:misc-attack; sid:1903; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"EXPERIMENTAL IMAP find overflow attempt"; flow:established,to_server; content:" FIND "; nocase; content:!"|0a|"; within:1024; reference:nessus,10374; reference:cve,CAN-2000-0284; classtype:misc-attack; sid:1904; rev:1;)
+
+# NOTES: for this signature to be useful, you need to configure the http
+# decoder preprocessors to check for 5800 and 5802.  This is not done by
+# default, which is why this signature will be disabled by default when
+# it is moved into policy.rules
+alert tcp $EXTERNAL_NET any -> $HOME_NET 5800:5802 (msg:"EXPERIMENTAL POLICY vnc viewer java applet download attempt"; uricontent:"/vncviewer.jar"; reference:nessus,10758; classtype:misc-activity; sid:1846; rev:2;)
+
+
+
+# NOTES: add notes about wintrin00
+alert udp $EXTERNAL_NET any -> $HOME_NET 35555 (msg:"EXPERIMENTAL BACKDOOR win-trin00 connection attempt"; content:"png []..Ks l44"; offset:0; depth:14; reference:cve,CAN-2000-0138; reference:nessus,10307; classtype:attempted-admin; sid:1853; rev:2;)
+
+alert icmp $EXTERNAL_NET any <> $HOME_NET any (msg:"EXPERIMENTAL DDOS Stacheldraht handler->agent (niggahbitch)"; content:"niggahbitch"; itype:0; icmp_id:9015; reference:url,staff.washington.edu/dittrich/misc/stacheldraht.analysis; classtype:attempted-dos; sid:1854; rev:1;)
+alert icmp $HOME_NET any <> $EXTERNAL_NET any (msg:"DDOS Stacheldraht agent->handler (skillz)"; content:"skillz"; itype:0; icmp_id:6666; reference:url,staff.washington.edu/dittrich/misc/stacheldraht.analysis; classtype:attempted-dos; sid:1855; rev:1;)
+alert icmp $EXTERNAL_NET any <> $HOME_NET any (msg:"DDOS Stacheldraht handler->agent (ficken)"; content:"ficken"; itype:0; icmp_id:6667; reference:url,staff.washington.edu/dittrich/misc/stacheldraht.analysis; classtype:attempted-dos; sid:1856; rev:1;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"EXPERIMENTAL FTP SITE NEWER attempt"; flow:to_server,established; content:"SITE "; nocase; content:" NEWER "; nocase; reference:cve,CVE-1999-0880; reference:nessus,10319; classtype:attempted-dos; sid:1864; rev:1;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"EXPERIMENTAL FTP SITE CPWD overflow attempt"; flow:established,to_server; content:"SITE "; nocase; content:" CPWD "; nocase; content:!"|0a|"; within:100; reference:bugtraq,5427; reference:cve,CAN-2002-0826; classtype:misc-attack; sid:1888; rev:2;)
+
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS 443 (msg:"EXPERIMENTAL WEB-MISC OpenSSL Worm traffic"; flow:to_server,established;  content:"TERM=xterm"; nocase; classtype:web-application-attack; reference:url,www.cert.org/advisories/CA-2002-27.html; sid:1887; rev:1;)
+alert udp $EXTERNAL_NET 2002 -> $HTTP_SERVERS 2002 (msg:"EXPERIMENTAL WORM slapper admin traffic"; content:"|0000 4500 0045 0000 4000|"; offset:0; depth:10; classtype:trojan-activity; reference:url,www.cert.org/advisories/CA-2002-27.html; reference:url,isc.incidents.org/analysis.html?id=167; sid:1889; rev:2;)
+
+alert udp $EXTERNAL_NET any -> $HOME_NET 500: (msg:"RPC AMD UDP amqproc_mount plog overflow attempt"; content:"|00 04 93 F3|"; content:"|00 00 00 07|"; distance:4; within:4; byte_test:4,>,512,16,relative; reference:cve,CVE-1999-0704; reference:bugtraq,614; classtype:misc-attack; sid:1905; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 500: (msg:"RPC AMD TCP amqproc_mount plog overflow attempt"; flow:to_server,established; content:"|00 04 93 F3|"; content:"|00 00 00 07|"; distance:4; within:4; byte_test:4,>,512,16,relative; reference:cve,CVE-1999-0704; reference:bugtraq,614; classtype:misc-attack; sid:1906; rev:1;)
+
+alert udp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC CMSD UDP CMSD_CREATE buffer overflow attempt"; content:"|00 01 86 E4|"; content:"|00 00 00 15|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,1024,20,relative; reference:cve,CVE-1999-0696; reference:bugtraq,524; classtype:attempted-admin; sid:1907; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC CMSD TCP CMSD_CREATE buffer overflow attempt"; flow:to_server,established; content:"|00 01 86 E4|"; content:"|00 00 00 15|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,1024,20,relative; reference:cve,CVE-1999-0696; reference:bugtraq,524; classtype:attempted-admin; sid:1908; rev:2;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC CMSD TCP CMSD_INSERT buffer overflow attempt"; flow:to_server,established; content:"|00 01 86 E4|"; content:"|00 00 00 06|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_jump:4,20,relative,align; byte_test:4,>,1000,28,relative; reference:cve,CVE-1999-0696; reference:url,www.cert.org/advisories/CA-99-08-cmsd.html; classtype:misc-attack; sid:1909; rev:2;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC CMSD udp CMSD_INSERT buffer overflow attempt"; content:"|00 01 86 E4|"; content:"|00 00 00 06|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_jump:4,20,relative,align; byte_test:4,>,1000,28,relative; reference:cve,CVE-1999-0696; reference:url,www.cert.org/advisories/CA-99-08-cmsd.html; classtype:misc-attack; sid:1910; rev:1;)
+
+alert udp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC sadmind UDP NETMGT_PROC_SERVICE CLIENT_DOMAIN overflow attempt"; content:"|00 01 87 88|"; content:"|00 00 00 01|"; distance:4; within:4; byte_test:4,>,512,240,relative; reference:cve,CVE-1999-0977; reference:bugtraq,866; classtype:attempted-admin; sid:1911; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 32770:34000 (msg:"RPC sadmind TCP NETMGT_PROC_SERVICE CLIENT_DOMAIN overflow attempt"; flow:to_server,established; content:"|00 01 87 88|"; content:"|00 00 00 01|"; distance:4; within:4; byte_test:4,>,512,240,relative; reference:cve,CVE-1999-0977; reference:bugtraq,866; classtype:attempted-admin; sid:1912; rev:2;)
+
+
+#alert udp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD UDP stat mon_name format string exploit attempt"; content:"|00 01 86 B8|"; content:"|00 00 00 01|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; content:"|25|"; distance:24; within:95; content:"|25|"; distance:1; within:5; reference:cve,CVE-2000-0666; reference:bugtraq,1480;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD UDP stat mon_name format string exploit attempt"; content:"|00 01 86 B8|"; content:"|00 00 00 01|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; reference:cve,CVE-2000-0666; reference:bugtraq,1480; classtype:attempted-admin; sid:1913; rev:2;)
+#alert tcp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD TCP stat mon_name format string exploit attempt"; flow:to_server,established; content:"|00 01 86 B8|"; content:"|00 00 00 01|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; content:"|25|"; distance:24; within:95; content:"|25|"; distance:1; within:5; reference:cve,CVE-2000-0666; reference:bugtraq,1480;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD TCP stat mon_name format string exploit attempt"; flow:to_server,established; content:"|00 01 86 B8|"; content:"|00 00 00 01|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; reference:cve,CVE-2000-0666; reference:bugtraq,1480; classtype:attempted-admin; sid:1914; rev:2;)
+
+#alert udp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD UDP monitor mon_name format string exploit attempt"; content:"|00 01 86 B8|"; content:"|00 00 00 02|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; content:"|25|"; distance:20; within:95; content:"|25|"; distance:1; within:5; reference:cve,CVE-2000-0666; reference:bugtraq,1480;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD UDP monitor mon_name format string exploit attempt"; content:"|00 01 86 B8|"; content:"|00 00 00 02|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; reference:cve,CVE-2000-0666; reference:bugtraq,1480; classtype:attempted-admin; sid:1915; rev:2;)
+#alert tcp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD TCP monitor mon_name format string exploit attempt"; flow:to_server,established; content:"|00 01 86 B8|"; content:"|00 00 00 02|"; distance:4; within:4; byte_test:4,>,100,16,relative; content:"|25|"; distance:16; within:96; content:"|25|"; distance:1; within:5; reference:cve,CVE-2000-0666; reference:bugtraq,1480;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"RPC STATD TCP monitor mon_name format string exploit attempt"; flow:to_server,established; content:"|00 01 86 B8|"; content:"|00 00 00 02|"; distance:4; within:4; byte_jump:4,12,relative,align; byte_test:4,>,100,20,relative; reference:cve,CVE-2000-0666; reference:bugtraq,1480; classtype:attempted-admin; sid:1916; rev:2;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 1900 (msg:"SCAN UPNP service discover attempt"; content:"M-SEARCH "; offset:0; depth:9; content:"ssdp\:discover"; classtype:network-scan; sid:1917; rev:2;)
+alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:"SCAN SolarWinds IP scan attempt"; content:"SolarWinds.Net"; itype:8; icode:0; classtype:network-scan; sid:1918; rev:2;)

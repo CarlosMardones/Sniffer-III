@@ -1,0 +1,21 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: policy.rules,v 1.26 2002/10/18 15:23:33 andrewbaker Exp $
+#-------------
+# POLICY RULES
+#-------------
+#
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"POLICY FTP anonymous login attempt"; content:"USER"; nocase; content:" anonymous|0D0A|"; nocase; flow:to_server,established; classtype:misc-activity; sid:553; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"POLICY FTP anonymous (ftp) login attempt"; content:"USER"; nocase; content:" ftp|0D0A|"; nocase; flow:to_server,established; classtype:misc-activity; sid:1449; rev:3;)
+alert tcp $HOME_NET 23 -> $EXTERNAL_NET any (msg:"POLICY WinGate telnet server response"; content:"WinGate>"; flow:from_server,established; reference:arachnids,366; reference:cve,CAN-1999-0657; classtype:misc-activity; sid:555; rev:4;)
+
+
+# we have started to see multiple versions of this beyond 003.003, so we have
+# expanded this signature to take that into account.
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"POLICY VNC server response"; flow:established; content:"RFB 0"; offset:0; depth:5; content:".0"; offset:7; depth:2; classtype:misc-activity; sid:560; rev:5;)
+
+alert udp $EXTERNAL_NET any -> $HOME_NET 5632 (msg:"POLICY PCAnywhere server response"; content:"ST"; depth: 2; reference:arachnids,239; classtype:misc-activity; sid:566; rev:3;)
+alert tcp $SMTP_SERVERS 25 -> $EXTERNAL_NET any (msg:"POLICY SMTP relaying denied"; flow:established,from_server; content: "550 5.7.1"; depth:70; reference:url,mail-abuse.org/tsi/ar-fix.html; reference:arachnids,249; classtype:misc-activity; sid:567; rev:9;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 9100 (msg:"POLICY HP JetDirect LCD modification attempt"; flow:to_server,established; content:"@PJL RDYMSG DISPLAY ="; classtype:misc-activity; reference:bugtraq,2245; reference:arachnids,302; sid:568; rev:5;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 9000:9002 (msg:"POLICY HP JetDirect LCD modification attempt"; flow:to_server,established; content:"@PJL RDYMSG DISPLAY ="; classtype:misc-activity; reference:bugtraq,2245; reference:arachnids,302; sid:510; rev:6;)

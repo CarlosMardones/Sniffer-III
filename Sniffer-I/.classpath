@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="libs/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="libs/jcommon-0.9.6.jar"/>
+	<classpathentry kind="lib" path="libs/jdom.jar"/>
+	<classpathentry kind="lib" path="libs/jfreechart-0.9.21.jar"/>
+	<classpathentry kind="lib" path="libs/swing-layout-1.0.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/net.sourceforge.jpcap-0.01.16.jar"/>
+	<classpathentry kind="output" path="class"/>
+</classpath>

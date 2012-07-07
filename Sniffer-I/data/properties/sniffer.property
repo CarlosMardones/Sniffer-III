@@ -1,0 +1,7 @@
+#Sniffer I
+#Sat Jul 07 13:33:17 CEST 2012
+WinX=0
+TableView=ACK,Num,MAC Dest,Frame,SEQ,Time,IP Dest,Size,MAC Src,Protocol,IP Src,Port Src,Port Dest,Length,
+WinHeight=600
+WinWidth=800
+WinY=0

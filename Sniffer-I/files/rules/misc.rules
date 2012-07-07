@@ -1,0 +1,30 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: misc.rules,v 1.35 2002/11/05 21:02:00 cazz Exp $
+#-----------
+# MISC RULES
+#-----------
+
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"MISC source route lssr"; ipopts:lsrr; reference:bugtraq,646; reference:cve,CVE-1999-0909; reference:arachnids,418; classtype:bad-unknown; sid:500; rev:2;)
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"MISC source route lssre"; ipopts:lsrre; reference:bugtraq,646; reference:cve,CVE-1999-0909; reference:arachnids,420; classtype:bad-unknown; sid:501; rev:2;)
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"MISC source route ssrr"; ipopts: ssrr ;reference:arachnids,422; classtype:bad-unknown; sid:502; rev:1;)
+alert tcp $EXTERNAL_NET 20 -> $HOME_NET :1023 (msg:"MISC Source Port 20 to <1024"; flags:S; reference:arachnids,06; classtype:bad-unknown; sid:503; rev:2;)
+alert tcp $EXTERNAL_NET 53 -> $HOME_NET :1023 (msg:"MISC source port 53 to <1024"; flags:S; reference:arachnids,07; classtype:bad-unknown; sid:504; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 1417 (msg:"MISC Insecure TIMBUKTU Password"; content: "|05 00 3E|"; flow:to_server,established; depth:16; reference:arachnids,229; classtype:bad-unknown; sid:505;  rev:3;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 5631 (msg:"MISC PCAnywhere Attempted Administrator Login"; flow:to_server,established; content:"ADMINISTRATOR"; classtype:attempted-admin; sid:507;  rev:3;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 70 (msg:"MISC gopher proxy"; flow:to_server,established; content:"ftp|3a|"; nocase; content: "@/"; reference:arachnids,409; classtype:bad-unknown; sid:508;  rev:5;)
+alert tcp $HOME_NET 5631:5632 -> $EXTERNAL_NET any (msg:"MISC PCAnywhere Failed Login"; flow:from_server,established; content:"Invalid login"; depth: 16; reference:arachnids,240; classtype:unsuccessful-user; sid:512;  rev:3;)
+alert tcp $HOME_NET 7161 -> $EXTERNAL_NET any (msg:"MISC Cisco Catalyst Remote Access"; flags:SA; reference:arachnids,129; reference:cve,CVE-1999-0430; classtype:bad-unknown; sid:513; rev:3;)
+alert tcp $HOME_NET any -> $EXTERNAL_NET 27374 (msg:"MISC ramen worm"; flow:to_server,established; content:"GET "; depth:8; nocase; reference:arachnids,461; classtype:bad-unknown; sid:514;  rev:4;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 161 (msg:"MISC SNMP NT UserList"; content:"|2b 06 10 40 14 d1 02 19|"; classtype:attempted-recon; sid:516; rev:2;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 177 (msg:"MISC xdmcp query"; content:"|00 01 00 03 00 01 00|"; reference:arachnids,476; classtype:attempted-recon; sid:517; rev:1;)
+
+# once we get response, check for content:"|00 01 00|"; offset:0; depth:3;
+alert udp $EXTERNAL_NET any -> $HOME_NET 177 (msg:"MISC xdmcp info query"; content:"|00 01 00 02 00 01 00|"; reference:nessus,10891; classtype:attempted-recon; sid:1867; rev:1;)
+alert udp $EXTERNAL_NET any -> $HOME_NET any (msg:"MISC Large UDP Packet"; dsize: >4000; reference:arachnids,247; classtype:bad-unknown; sid:521; rev:1;)
+alert ip $EXTERNAL_NET any -> $HOME_NET any (msg:"MISC Tiny Fragments"; fragbits:M; dsize: < 25; classtype:bad-unknown; sid:522; rev:1;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 1900 (msg:"MISC UPNP malformed advertisement"; content:"NOTIFY * "; nocase; classtype:misc-attack; reference:cve,CAN-2001-0876; reference:cve,CAN-2001-0877; sid:1384; rev:2;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 1900 (msg:"MISC UPNP Location overflow"; content:"|0d|Location|3a|"; nocase; content:!"|0a|"; within:128; classtype:misc-attack; reference:cve,CAN-2001-0876; sid:1388; rev:3;)
+alert tcp $AIM_SERVERS any -> $HOME_NET any (msg:"MISC AIM AddGame attempt"; flow:to_client,established; content:"aim\:AddGame?"; nocase; reference:url,www.w00w00.org/files/w00aimexp/; reference:bugtraq,3769; reference:cve,CAN-2002-0005; classtype:misc-attack; sid:1393; rev:9;)
+alert tcp $AIM_SERVERS any -> $HOME_NET any (msg:"MISC AIM AddExternalApp attempt"; flow:to_client,established; content:"aim\:AddExternalApp?"; nocase; reference:url,www.w00w00.org/files/w00aimexp/; classtype:misc-attack; sid:1752; rev:3;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 7001 (msg:"MISC AFS access"; content:"|00 00 03 e7 00 00 00 00 00 00 00 65 00 00 00 00 00 00 00 00 0d 05 00 00 00 00 00 00 00|"; reference:nessus,10441; classtype:misc-activity; sid:1504; rev:5;)

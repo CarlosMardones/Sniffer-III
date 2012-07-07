@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaptureSniffer>
+  <ExportPreferences>
+    <File>
+      <Type>XML</Type>
+      <Source></Source>
+      <Destination></Destination>
+      <Multiple_Files>Yes</Multiple_Files>
+    </File>
+    <Statistics Id="No">
+      <Read>No</Read>
+    </Statistics>
+  </ExportPreferences>
+</CaptureSniffer>
+

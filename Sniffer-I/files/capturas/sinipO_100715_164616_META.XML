@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaptureSniffer>
+  <CapturePreferences>
+    <Capture>
+      <Interface>VMware Accelerated AMD PCNet Adapter (Microsoft's Packet Scheduler) 
+ VMware Accelerated AMD PCNet Adapter (Microsoft's Packet Scheduler)</Interface>
+      <Promiscuous_Modo>Yes</Promiscuous_Modo>
+      <Filter Id="No">
+        <Advanced Id="No" />
+        <Normal Id="Yes">
+          <Host />
+          <Protocol />
+          <Port />
+        </Normal>
+      </Filter>
+    </Capture>
+    <File>
+      <Locate>E:\Sniffer-I\files\capturas\sinipO.pcap</Locate>
+      <Multiple_Files Id="Yes">
+        <Space Id="Yes" Type="kilobyte(s)">50</Space>
+        <Time Id="No" Type="segundo(s)" />
+        <Ring_Buffer Id="No" Type="10">5</Ring_Buffer>
+        <Stop_After Id="No" Type="10">7</Stop_After>
+      </Multiple_Files>
+    </File>
+    <Stop_Capture>
+      <After_Packets Id="No" />
+      <After_Space Id="No" Type="kilobyte(s)" />
+      <After_Time Id="No" Type="segundo(s)" />
+    </Stop_Capture>
+  </CapturePreferences>
+  <MetaCapture>
+    <Locate>
+      <Relative Id="No" />
+      <Absolute Id="Yes">
+        <Path>E:\Sniffer-I\files\capturas</Path>
+        <Name>sinipO_100715_164616</Name>
+      </Absolute>
+    </Locate>
+    <Multiple_Files Id="Yes">
+      <Ring_Buffer Id="No">5</Ring_Buffer>
+      <Start>1</Start>
+      <End>2</End>
+    </Multiple_Files>
+  </MetaCapture>
+</CaptureSniffer>
+

@@ -1,0 +1,15 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: imap.rules,v 1.3 2002/11/05 21:02:00 cazz Exp $
+#--------------
+# IMAP RULES
+#--------------
+
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT overflow"; flow:to_server,established; content:"|E8 C0FF FFFF|/bin/sh"; classtype:attempted-admin; sid:293; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT x86 linux overflow"; flow:to_server,established; content:"|89d8 40cd 80e8 c8ff ffff|/";reference:bugtraq,130; reference:cve,CVE-1999-0005; classtype:attempted-admin; sid:295; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT x86 linux overflow"; flow:to_server,established; content:"|eb34 5e8d 1E89 5e0b 31d2 8956 07|";reference:bugtraq,130; reference:cve,CVE-1999-0005; classtype:attempted-admin; sid:296; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT x86 linux overflow"; flow:to_server,established; content:"|eb35 5E80 4601 3080 4602 3080 4603 30|";reference:bugtraq,130; reference:cve,CVE-1999-0005; classtype:attempted-admin; sid:297; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT x86 linux overflow"; flow:to_server,established; content:"|eb38 5e89f389d880460120804602|"; reference:bugtraq,130; reference:cve,CVE-1999-0005; classtype:attempted-admin; sid:298; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT x86 linux overflow"; flow:to_server,established; content:"|eb58 5E31 db83 c308 83c3 0288 5e26|"; reference:bugtraq,130; reference:cve, CVE-1999-0005; classtype:attempted-admin; sid:299; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT partial body buffer overflow attempt"; flow:to_server,established; content:" PARTIAL "; content:" BODY"; content:!"|0a|"; within:1024; reference:bugtraq,4713; reference:cve,CAN-2002-0379; classtype:misc-attack; sid:1755; rev:6;)

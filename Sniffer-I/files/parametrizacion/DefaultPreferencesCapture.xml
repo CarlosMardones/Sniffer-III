@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaptureSniffer>
+  <CapturePreferences>
+    <Capture>
+      <Interface>AMD PCNET Family Ethernet Adapter (Microsoft's Packet Scheduler) 
+ AMD PCNET Family Ethernet Adapter (Microsoft's Packet Scheduler)</Interface>
+      <Promiscuous_Modo>Yes</Promiscuous_Modo>
+      <Filter Id="No">
+        <Advanced Id="No" />
+        <Normal Id="Yes">
+          <Host />
+          <Protocol />
+          <Port />
+        </Normal>
+      </Filter>
+    </Capture>
+    <File>
+      <Locate>C:\Sniffer-I\files\capturas\capturas.pcap</Locate>
+      <Multiple_Files Id="Yes">
+        <Space Id="Yes" Type="kilobyte(s)">50</Space>
+        <Time Id="No" Type="segundo(s)" />
+        <Ring_Buffer Id="No" Type="10">5</Ring_Buffer>
+        <Stop_After Id="No" Type="10">7</Stop_After>
+      </Multiple_Files>
+    </File>
+    <Stop_Capture>
+      <After_Packets Id="No" />
+      <After_Space Id="No" Type="kilobyte(s)" />
+      <After_Time Id="No" Type="segundo(s)" />
+    </Stop_Capture>
+  </CapturePreferences>
+</CaptureSniffer>
+

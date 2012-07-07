@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path:  libs/net.sourceforge.jpcap-0.01.16.jar libs/jdom.jar libs/AbsoluteLayout.jar  libs/jfreechart-0.9.21.jar libs/jcommon-0.9.6.jar libs/swing-layout-1.0.3.jar libs/jpcap.jar
+Main-Class: Sniffer
+Implementation-Title: Sniffer
+Implementation-Version: 2.0
+Implementation-Vendor: Leonardo&JoseRamon

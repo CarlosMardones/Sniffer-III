@@ -1,0 +1,15 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: ftp.rules,v 1.33 2002/11/05 21:01:59 cazz Exp $
+#----------
+# FTP RULES
+#----------
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP EXPLOIT STAT * dos attempt"; flow:to_server,established; content:"STAT "; nocase; content:"*"; reference:bugtraq,4482; classtype:attempted-dos; sid:1777; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP EXPLOIT STAT ? dos attempt"; flow:to_server,established; content:"STAT "; nocase; content:"?"; reference:bugtraq,4482; classtype:attempted-dos; sid:1778;  rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP .forward"; content: ".forward"; flow:to_server,established; reference:arachnids,319; classtype:suspicious-filename-detect; sid:334; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP .rhosts"; flow:to_server,established; content:".rhosts"; reference:arachnids,328; classtype:suspicious-filename-detect; sid:335; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP CWD ~root attempt"; content:"CWD "; content:" ~root"; nocase; flow:to_server,established; reference:cve,CVE-1999-0082; reference:arachnids,318; classtype:bad-unknown; sid:336; rev:5;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP CEL overflow attempt";flow:to_server,established; content:"CEL "; nocase; content:!"|0a|"; within:100; reference:bugtraq,679; reference:cve,CVE-1999-0789; reference:arachnids,257; classtype:attempted-admin; sid:337; rev:5;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP CWD overflow attempt"; flow:to_server,established; content:"CWD "; nocase; content:!"|0a|"; within:100; classtype:attempted-admin; sid:1919; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 21 (msg:"FTP CMD overflow attempt"; flow:to_server,established; content:"CMD "; nocase; content:!"|0a|"; within:100; classtype:attempted-admin; sid:1621; rev:8;)

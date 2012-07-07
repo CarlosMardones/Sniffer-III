@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaptureSniffer>
+  <FromFilePreferences>
+    <Capture>
+      <Source>C:\Sniffer-I\files\capturas\capturas.pcap</Source>
+      <Filter Id="Yes">
+        <Advanced Id="No" />
+        <Normal Id="Yes">
+          <Host />
+          <Protocol />
+          <Port />
+        </Normal>
+      </Filter>
+    </Capture>
+    <File>
+      <Locate>C:\Sniffer-I\files\capturas\desde_fichero.pcap</Locate>
+      <Multiple_Files Id="Yes">
+        <Space Id="Yes" Type="kilobyte(s)">10</Space>
+        <Ring_Buffer Id="No" Type="segundo(s)" />
+        <Stop_After Id="No" Type="Files" />
+      </Multiple_Files>
+    </File>
+    <Stop_Capture>
+      <After_Packets Id="Yes" />
+    </Stop_Capture>
+  </FromFilePreferences>
+</CaptureSniffer>
+

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefinicionProtocoloSniffer>
+  <DefinicionProtocolo>
+    <Clave0>
+      <Valor>176,178</Valor>
+      <Tipo>Numerico</Tipo>
+      <PosicionInicio>0</PosicionInicio>
+      <Tamaño>1</Tamaño>
+    </Clave0>
+    <CamposProtocolo>
+      <Protocolo>ftp171</Protocolo>
+      <Nivel>5</Nivel>
+      <NumeroCampos>7</NumeroCampos>
+      <CamposClave>1</CamposClave>
+      <RFC>171</RFC>
+    </CamposProtocolo>
+    <Campo1>
+      <IDCampo>1</IDCampo>
+      <NombreCampo>Types</NombreCampo>
+      <TamañoCampo>8</TamañoCampo>
+      <ValorDefectoCampo>176,178</ValorDefectoCampo>
+      <DescripcionCampo />
+      <TipoDato>Numerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo1>
+    <Campo2>
+      <IDCampo>2</IDCampo>
+      <NombreCampo>Info count</NombreCampo>
+      <TamañoCampo>24</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo2>
+    <Campo3>
+      <IDCampo>3</IDCampo>
+      <NombreCampo>NUL</NombreCampo>
+      <TamañoCampo>8</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo3>
+    <Campo4>
+      <IDCampo>4</IDCampo>
+      <NombreCampo>Seq #</NombreCampo>
+      <TamañoCampo>16</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo4>
+    <Campo5>
+      <IDCampo>5</IDCampo>
+      <NombreCampo>NUL</NombreCampo>
+      <TamañoCampo>8</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo5>
+    <Campo6>
+      <IDCampo>6</IDCampo>
+      <NombreCampo>filler count</NombreCampo>
+      <TamañoCampo>8</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo6>
+    <Campo7>
+      <IDCampo>7</IDCampo>
+      <NombreCampo>data</NombreCampo>
+      <TamañoCampo>24</TamañoCampo>
+      <ValorDefectoCampo />
+      <DescripcionCampo />
+      <TipoDato>Alfanumerico</TipoDato>
+      <Opcional>No</Opcional>
+      <CampoReferenciado />
+    </Campo7>
+  </DefinicionProtocolo>
+</DefinicionProtocoloSniffer>
+

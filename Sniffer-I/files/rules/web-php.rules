@@ -1,0 +1,25 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: web-php.rules,v 1.3 2002/10/28 22:08:17 cazz Exp $
+#--------------
+# WEB-PHP RULES
+#--------------
+
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP bb_smilies.php access"; flow:to_server,established; uricontent:"/bb_smilies.php"; nocase; reference:url,www.securiteam.com/securitynews/Serious_security_hole_in_PHP-Nuke__bb_smilies_.html; classtype:web-application-activity; sid:1774; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP content-disposition memchr overlfow"; flow:to_server,established; content:"Content-Disposition\:"; content:"name=\"|CC CC CC CC CC|"; reference:bugtraq,4183; classtype:web-application-attack; sid:1423; rev:7;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP content-disposition"; flow:to_server,established; content:"Content-Disposition\:"; content:"form-data\;"; classtype:web-application-attack; reference:bugtraq,4183; sid:1425; rev:6;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP squirrelmail spellcheck arbitrary command attempt"; flow:to_server,established; uricontent:"/squirrelspell/modules/check_me.mod.php"; nocase; content: "SQSPELL_APP["; nocase; reference:bugtraq,3952; classtype:web-application-attack; sid:1736; rev:4;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP squirrelmail theme arbitrary command attempt"; flow:to_server,established; uricontent:"/left_main.php"; nocase; content:"cmdd="; reference:bugtraq,4385; classtype:web-application-attack; sid:1737; rev:3;)
+
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP DNSTools administror authentication bypass attempt"; flow:to_server,established; uricontent:"/dnstools.php"; nocase; content:"user_logged_in=true"; nocase; content:"user_dnstools_administrator=true"; nocase; reference:bugtraq,4617; classtype:web-application-attack; sid:1739; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP DNSTools authentication bypass attempt"; flow:to_server,established; uricontent:"/dnstools.php"; nocase; content:"user_logged_in=true"; reference:bugtraq,4617; classtype:web-application-attack; sid:1740; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP DNSTools access"; flow:to_server,established; uricontent:"/dnstools.php"; nocase; reference:bugtraq,4617; classtype:web-application-activity; sid:1741; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP Blahz-DNS dostuff.php modify user attempt"; flow:to_server,established; uricontent:"/dostuff.php?action=modify_user"; nocase; reference:bugtraq,4618; classtype:web-application-attack; sid:1742; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP Blahz-DNS dostuff.php access"; flow:to_server,established; uricontent:"/dostuff.php"; nocase; reference:bugtraq,4618; classtype:web-application-activity; sid:1743; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP Messagerie supp_membre.php access"; flow:to_server,established; uricontent:"/supp_membre.php"; nocase; reference:bugtraq,4635; classtype:web-application-activity; sid:1745; rev:3;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP php.exe access"; flow:to_server,established; uricontent:"/php.exe"; nocase; reference:url,www.securitytracker.com/alerts/2002/Jan/1003104.html; classtype:web-application-activity; sid:1773; rev:3;)
+
+
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP directory.php arbitrary command attempt"; flow:to_server,established; uricontent:"/directory.php"; content:"dir="; content:"\;"; reference:bugtraq,4278; reference:cve,CAN-2002-0434; classtype:misc-attack; sid:1815; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP directory.php access"; flow:to_server,established; uricontent:"/directory.php"; reference:bugtraq,4278; reference:cve,CAN-2002-0434; classtype:misc-attack; sid:1816; rev:2;)
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS $HTTP_PORTS (msg:"WEB-PHP PHP-Wiki cross site scripting attempt"; flow:established,to_server; uricontent:"/modules.php?"; uricontent:"name=Wiki"; nocase; uricontent:"<script"; nocase; reference:bugtraq,5254; classtype:web-application-attack; sid:1834; rev:3;)

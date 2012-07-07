@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Capture File</comment>
+<entry key="Extension">.pcap</entry>
+<entry key="MultipleFile">Yes</entry>
+<entry key="Locate">E:\Sniffer-I\files\capturas</entry>
+<entry key="Capturando">No</entry>
+<entry key="Name">pruebafin_100715_161441</entry>
+<entry key="StopAfter">0</entry>
+<entry key="LastNumCaptureFile">1</entry>
+<entry key="RingBuffer">0</entry>
+<entry key="LastCaptureFile">pruebafin_100715_161441_1.pcap</entry>
+</properties>

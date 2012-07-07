@@ -1,0 +1,16 @@
+# (C) Copyright 2001,2002, Martin Roesch, Brian Caswell, et al.
+#    All rights reserved.
+# $Id: icmp.rules,v 1.18 2002/08/18 20:28:43 cazz Exp $
+#-----------
+# ICMP RULES
+#-----------
+#
+# Description:
+# These rules are potentially bad ICMP traffic.  They include most of the
+# ICMP scanning tools and other "BAD" ICMP traffic (Such as redirect host)
+#
+# Other ICMP rules are included in icmp-info.rules
+alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:"ICMP ISS Pinger"; content:"|495353504e475251|";itype:8;depth:32; reference:arachnids,158; classtype:attempted-recon; sid:465; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET 143 (msg:"IMAP EXPLOIT partial body buffer overflow attempt"; flow:to_server,established; content:" PARTIAL "; content:" BODY"; content:!"|0a|"; within:1024; reference:bugtraq,4713; reference:cve,CAN-2002-0379; classtype:misc-attack; sid:1755; rev:6;priority:10;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"MY ALERT"; content:"PNG";)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"MY ALERT2"; content:"|4e 47 0d 0a|";)
